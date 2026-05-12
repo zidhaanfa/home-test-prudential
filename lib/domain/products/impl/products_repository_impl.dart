@@ -39,6 +39,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   // get product detail
+  @override
   Future<Either<Failure, ProductEntity>> getProductDetail(
     String productId,
   ) async {
@@ -61,4 +62,69 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   // create product
+  @override
+  Future<Either<Failure, ProductModel>> createProduct(
+    ProductModel product,
+  ) async {
+    try {
+      final response = await apiService.createProduct(data: product.toJson());
+      if (response.statusCode == 200) {
+        final product = JsonParser.parseObject(
+          json: response.data,
+          fromJson: ProductModel.fromJson,
+        );
+        return Right(product);
+      } else {
+        return Left(ServerFailure(response.statusMessage ?? 'Server Error'));
+      }
+    } on DioException catch (e) {
+      return Left(ServerFailure(e.message ?? 'Network Error'));
+    } catch (e) {
+      return Left(ServerFailure('Unexpected Error Occurred'));
+    }
+  }
+
+  // update product
+  @override
+  Future<Either<Failure, ProductModel>> updateProduct(
+    String id,
+    ProductModel product,
+  ) async {
+    try {
+      final response = await apiService.updateProduct(
+        id: id,
+        data: product.toJson(),
+      );
+      if (response.statusCode == 200) {
+        final product = JsonParser.parseObject(
+          json: response.data,
+          fromJson: ProductModel.fromJson,
+        );
+        return Right(product);
+      } else {
+        return Left(ServerFailure(response.statusMessage ?? 'Server Error'));
+      }
+    } on DioException catch (e) {
+      return Left(ServerFailure(e.message ?? 'Network Error'));
+    } catch (e) {
+      return Left(ServerFailure('Unexpected Error Occurred'));
+    }
+  }
+
+  // delete product
+  @override
+  Future<Either<Failure, bool>> deleteProduct(String id) async {
+    try {
+      final response = await apiService.deleteProduct(id);
+      if (response.statusCode == 200) {
+        return const Right(true);
+      } else {
+        return Left(ServerFailure(response.statusMessage ?? 'Server Error'));
+      }
+    } on DioException catch (e) {
+      return Left(ServerFailure(e.message ?? 'Network Error'));
+    } catch (e) {
+      return Left(ServerFailure('Unexpected Error Occurred'));
+    }
+  }
 }

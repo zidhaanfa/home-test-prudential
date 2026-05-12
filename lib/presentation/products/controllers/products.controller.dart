@@ -5,14 +5,19 @@ import 'package:home_test_prudential/domain/products/usecases/get_products_useca
 import 'package:home_test_prudential/infrastructure/dal/models/pagination_filter.dart';
 
 import '../../../config/lifecycle/app_lifecycle_service.dart';
+import '../../../domain/products/usecases/get_productDetail_usecase.dart';
 import '../../../utils/config.dart';
 import '../../../utils/helper/snackbar.dart';
 
 class ProductsController extends GetxController {
   final GetProductsUseCase _getProductsUseCase;
+  final GetProductDetailUseCase _getProductDetailUseCase;
 
-  ProductsController({required GetProductsUseCase getProductsUseCase})
-    : _getProductsUseCase = getProductsUseCase;
+  ProductsController({
+    required GetProductsUseCase getProductsUseCase,
+    required GetProductDetailUseCase getProductDetailUseCase,
+  }) : _getProductsUseCase = getProductsUseCase,
+       _getProductDetailUseCase = getProductDetailUseCase;
 
   // ═══════════════════════════════════════════════════════════
   //  STATUS — setiap fetch punya ApiCallStatus sendiri
@@ -20,6 +25,7 @@ class ProductsController extends GetxController {
 
   /// Status fetch list products.
   final Rx<ApiCallStatus> productsStatus = ApiCallStatus.holding.obs;
+  final Rx<ApiCallStatus> productDetailStatus = ApiCallStatus.holding.obs;
 
   // ═══════════════════════════════════════════════════════════
   //  DATA
@@ -27,6 +33,7 @@ class ProductsController extends GetxController {
 
   /// List products.
   final RxList<ProductEntity> products = <ProductEntity>[].obs;
+  final Rx<ProductEntity?> productDetail = Rxn<ProductEntity>();
 
   // ═══════════════════════════════════════════════════════════
   //  PAGINATION & FILTER STATE
@@ -140,8 +147,9 @@ class ProductsController extends GetxController {
         // Cek apakah masih ada data setelah batch ini
         hasMore.value = (skip.value + limit.value) < data.total;
 
-        productsStatus.value =
-            data.products.isEmpty ? ApiCallStatus.empty : ApiCallStatus.success;
+        productsStatus.value = data.products.isEmpty
+            ? ApiCallStatus.empty
+            : ApiCallStatus.success;
         update(['products']);
       },
     );
@@ -176,6 +184,30 @@ class ProductsController extends GetxController {
         update(['products']);
       },
     );
+  }
+
+  /// get product detail
+  Future<void> getProductDetail(String id) async {
+    productDetailStatus.value = ApiCallStatus.loading;
+    try {
+      final result = await _getProductDetailUseCase.execute(id);
+      result.fold(
+        (error) {
+          productDetailStatus.value = ApiCallStatus.error;
+          SnackbarHelper.showError(error.message);
+          update(['productDetail']);
+        },
+        (data) {
+          productDetail.value = data;
+          productDetailStatus.value = ApiCallStatus.success;
+          update(['productDetail']);
+        },
+      );
+    } catch (e) {
+      productDetailStatus.value = ApiCallStatus.error;
+      SnackbarHelper.showError(e.toString());
+      update(['productDetail']);
+    }
   }
 
   /// Refresh — pull-to-refresh support.

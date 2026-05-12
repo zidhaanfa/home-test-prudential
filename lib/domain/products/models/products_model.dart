@@ -101,7 +101,7 @@ class ProductModel extends ProductEntity {
     "discountPercentage": discountPercentage,
     "rating": rating,
     "stock": stock,
-    "tags": tags.map((x) => x).toList(),
+    "tags": tags?.map((x) => x).toList(),
     "brand": brand,
     "sku": sku,
     "weight": weight,
@@ -109,12 +109,12 @@ class ProductModel extends ProductEntity {
     "warrantyInformation": warrantyInformation,
     "shippingInformation": shippingInformation,
     "availabilityStatus": availabilityStatus,
-    "reviews": reviews.map((x) => (x as ReviewModel).toJson()).toList(),
+    "reviews": reviews?.map((x) => (x as ReviewModel).toJson()).toList(),
     "returnPolicy": returnPolicy,
     "minimumOrderQuantity": minimumOrderQuantity,
     "meta": (meta as MetaModel?)?.toJson(),
     "thumbnail": thumbnail,
-    "images": images.map((x) => x).toList(),
+    "images": images?.map((x) => x).toList(),
   };
 }
 

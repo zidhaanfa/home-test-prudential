@@ -13,7 +13,10 @@ class ProductsScreen extends GetView<ProductsController> {
   @override
   Widget build(BuildContext context) {
     final ProductsController controller = Get.put(
-      ProductsController(getProductsUseCase: Get.find()),
+      ProductsController(
+        getProductsUseCase: Get.find(),
+        getProductDetailUseCase: Get.find(),
+      ),
     );
 
     return CustomLayout(

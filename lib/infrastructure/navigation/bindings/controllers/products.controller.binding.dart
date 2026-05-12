@@ -3,6 +3,7 @@ import 'package:home_test_prudential/infrastructure/dal/services/products_api_se
 
 import '../../../../domain/products/impl/products_repository_impl.dart';
 import '../../../../domain/products/repositories/products_repository.dart';
+import '../../../../domain/products/usecases/get_productDetail_usecase.dart';
 import '../../../../domain/products/usecases/get_products_usecase.dart';
 import '../../../../presentation/products/controllers/products.controller.dart';
 // import '../../../platform/secure_storage/flutter_secure_storage_impl.dart';
@@ -16,8 +17,14 @@ class ProductsControllerBinding extends Bindings {
       () => ProductsRepositoryImpl(apiService: Get.find()),
     );
     Get.lazyPut<GetProductsUseCase>(() => GetProductsUseCase(Get.find()));
+    Get.lazyPut<GetProductDetailUseCase>(
+      () => GetProductDetailUseCase(repository: Get.find()),
+    );
     Get.lazyPut<ProductsController>(
-      () => ProductsController(getProductsUseCase: Get.find()),
+      () => ProductsController(
+        getProductsUseCase: Get.find(),
+        getProductDetailUseCase: Get.find(),
+      ),
     );
   }
 }
