@@ -46,7 +46,7 @@ class LoginController extends BaseController {
       loginUseCase.execute(params),
       onSuccess: (login) {
         SnackbarHelper.showSuccess('Welcome back, ${login.username}');
-        Get.offAllNamed(Routes.home);
+        Get.offAllNamed(Routes.navigation);
       },
     );
   }

@@ -45,9 +45,19 @@ class Nav {
       binding: UserControllerBinding(),
     ),
     GetPage(
-      name: Routes.NAVIGATION,
+      name: Routes.navigation,
       page: () => const NavigationScreen(),
       binding: NavigationControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.products,
+      page: () => const ProductsScreen(),
+      binding: ProductsControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.profile,
+      page: () => const ProfileScreen(),
+      binding: ProfileControllerBinding(),
     ),
   ];
 }

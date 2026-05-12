@@ -32,12 +32,10 @@ class AuthRepositoryImpl implements AuthRepository {
       });
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        final data = response.data['data'];
+        final data = response.data;
 
         if (data == null) {
-          return Left(
-            ServerFailure(response.data['message'] ?? 'Data not found'),
-          );
+          return Left(ServerFailure('Data not found'));
         }
 
         final loginModel = LoginModel.fromJson(data);
