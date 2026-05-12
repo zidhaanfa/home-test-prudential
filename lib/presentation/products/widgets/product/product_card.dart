@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:home_test_prudential/domain/products/entities/products_entity.dart';
+import 'package:home_test_prudential/infrastructure/navigation/routes.dart';
 
 import '../../../../utils/helper/rupiah.dart';
 
@@ -11,6 +13,9 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: () {
+        Get.toNamed(Routes.productDetail, arguments: product.id);
+      },
       title: Text(product.title),
       subtitle: Text(
         product.description,
