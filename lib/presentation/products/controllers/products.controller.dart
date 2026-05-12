@@ -475,7 +475,7 @@ class ProductsController extends GetxController {
     return PaginationFilter(
       limit: limit.value,
       skip: skip.value,
-      select: searchController.text,
+      search: searchController.text,
     );
   }
 

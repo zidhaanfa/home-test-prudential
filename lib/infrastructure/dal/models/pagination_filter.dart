@@ -4,27 +4,27 @@
 class PaginationFilter {
   final int skip;
   final int limit;
-  final String? select;
+  final String? search;
 
-  const PaginationFilter({this.skip = 1, this.limit = 15, this.select});
+  const PaginationFilter({this.skip = 1, this.limit = 15, this.search});
 
   /// Convert to Json/QueryParameters untuk Dio
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{'skip': skip, 'limit': limit};
 
-    if (select != null && select!.isNotEmpty) {
-      map['select'] = select;
+    if (search != null && search!.isNotEmpty) {
+      map['search'] = search;
     }
 
     return map;
   }
 
   /// Copy with helper
-  PaginationFilter copyWith({int? skip, int? limit, String? select}) {
+  PaginationFilter copyWith({int? skip, int? limit, String? search}) {
     return PaginationFilter(
       skip: skip ?? this.skip,
       limit: limit ?? this.limit,
-      select: select ?? this.select,
+      search: search ?? this.search,
     );
   }
 }
