@@ -5,6 +5,8 @@ import 'package:home_test_prudential/domain/products/usecases/get_products_useca
 import 'package:home_test_prudential/infrastructure/dal/models/pagination_filter.dart';
 
 import '../../../config/lifecycle/app_lifecycle_service.dart';
+import '../../../domain/products/models/products_model.dart';
+import '../../../domain/products/usecases/create_product_usecase.dart';
 import '../../../domain/products/usecases/get_productDetail_usecase.dart';
 import '../../../utils/config.dart';
 import '../../../utils/helper/snackbar.dart';
@@ -12,12 +14,15 @@ import '../../../utils/helper/snackbar.dart';
 class ProductsController extends GetxController {
   final GetProductsUseCase _getProductsUseCase;
   final GetProductDetailUseCase _getProductDetailUseCase;
+  final CreateProductUseCase _createProductUseCase;
 
   ProductsController({
     required GetProductsUseCase getProductsUseCase,
     required GetProductDetailUseCase getProductDetailUseCase,
+    required CreateProductUseCase createProductUseCase,
   }) : _getProductsUseCase = getProductsUseCase,
-       _getProductDetailUseCase = getProductDetailUseCase;
+       _getProductDetailUseCase = getProductDetailUseCase,
+       _createProductUseCase = createProductUseCase;
 
   // ═══════════════════════════════════════════════════════════
   //  STATUS — setiap fetch punya ApiCallStatus sendiri
@@ -26,6 +31,7 @@ class ProductsController extends GetxController {
   /// Status fetch list products.
   final Rx<ApiCallStatus> productsStatus = ApiCallStatus.holding.obs;
   final Rx<ApiCallStatus> productDetailStatus = ApiCallStatus.holding.obs;
+  final Rx<ApiCallStatus> productCreateStatus = ApiCallStatus.holding.obs;
 
   // ═══════════════════════════════════════════════════════════
   //  DATA
@@ -195,6 +201,30 @@ class ProductsController extends GetxController {
       result.fold(
         (error) {
           productDetailStatus.value = ApiCallStatus.error;
+          SnackbarHelper.showError(error.message);
+          update(['productDetail']);
+        },
+        (data) {
+          productDetail.value = data;
+          productDetailStatus.value = ApiCallStatus.success;
+          update(['productDetail']);
+        },
+      );
+    } catch (e) {
+      productDetailStatus.value = ApiCallStatus.error;
+      SnackbarHelper.showError(e.toString());
+      update(['productDetail']);
+    }
+  }
+
+  /// create
+  Future<void> createProduct(ProductModel product) async {
+    productCreateStatus.value = ApiCallStatus.loading;
+    try {
+      final result = await _createProductUseCase.execute(product);
+      result.fold(
+        (error) {
+          productCreateStatus.value = ApiCallStatus.error;
           SnackbarHelper.showError(error.message);
           update(['productDetail']);
         },

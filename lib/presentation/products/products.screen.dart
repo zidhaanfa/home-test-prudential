@@ -16,6 +16,7 @@ class ProductsScreen extends GetView<ProductsController> {
       ProductsController(
         getProductsUseCase: Get.find(),
         getProductDetailUseCase: Get.find(),
+        createProductUseCase: Get.find(),
       ),
     );
 

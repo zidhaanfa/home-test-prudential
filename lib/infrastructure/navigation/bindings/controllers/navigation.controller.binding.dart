@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../../../../domain/products/impl/products_repository_impl.dart';
 import '../../../../domain/products/repositories/products_repository.dart';
+import '../../../../domain/products/usecases/create_product_usecase.dart';
 import '../../../../domain/products/usecases/get_productDetail_usecase.dart';
 import '../../../../domain/products/usecases/get_products_usecase.dart';
 import '../../../../presentation/navigation/controllers/navigation.controller.dart';
@@ -18,6 +19,7 @@ class NavigationControllerBinding extends Bindings {
     Get.lazyPut<GetProductDetailUseCase>(
       () => GetProductDetailUseCase(repository: Get.find()),
     );
+    Get.lazyPut<CreateProductUseCase>(() => CreateProductUseCase(Get.find()));
     Get.lazyPut<NavigationController>(() => NavigationController());
   }
 }
