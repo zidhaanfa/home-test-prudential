@@ -18,4 +18,5 @@ class Routes {
   static const user = '/user';
   static const comingSoon = '/coming-soon';
   static const addProduct = '/add-product';
+  static const productDetail = '/product-detail';
 }
