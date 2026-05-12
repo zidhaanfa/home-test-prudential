@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../products/controllers/products.controller.dart';
+import '../profile/controllers/profile.controller.dart';
 import 'controllers/navigation.controller.dart';
 
 class NavigationScreen extends GetView<NavigationController> {
@@ -20,7 +22,7 @@ class NavigationScreen extends GetView<NavigationController> {
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
           currentIndex: controller.tabIndex.value,
-          onTap: controller.changeTabIndex,
+          onTap: (index) => _handleNavigation(index, controller),
           type: BottomNavigationBarType.shifting,
           showSelectedLabels: true,
           showUnselectedLabels: true,
@@ -49,5 +51,34 @@ class NavigationScreen extends GetView<NavigationController> {
         ),
       ),
     );
+  }
+
+  Future<void> _handleNavigation(
+    int index,
+    NavigationController controller,
+  ) async {
+    switch (index) {
+      case 0:
+        final ProductsController productsController = Get.put(Get.find());
+        productsController.refreshProducts();
+        controller.tabIndex.value = index;
+        break;
+      case 1:
+        controller.tabIndex.value = index;
+        break;
+      case 2:
+        controller.tabIndex.value = index;
+        break;
+      case 3:
+        controller.tabIndex.value = index;
+
+        break;
+      case 4:
+        final ProfileController profileController = Get.put(Get.find());
+        profileController.fetchProfile();
+
+        controller.tabIndex.value = index;
+        break;
+    }
   }
 }

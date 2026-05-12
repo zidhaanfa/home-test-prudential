@@ -76,73 +76,75 @@ class ProductDetailScreen extends GetView<ProductsController> {
           ),
         ],
       ),
-      body: GetBuilder<ProductsController>(
-        id: 'productDetail',
-        builder: (controller) {
-          return MyWidgetsAnimator(
-            status: controller.productDetailStatus.value,
-            successWidget: () {
-              final product = controller.productDetail.value;
-              if (product == null) return const SizedBox();
+      body: SafeArea(
+        child: GetBuilder<ProductsController>(
+          id: 'productDetail',
+          builder: (controller) {
+            return MyWidgetsAnimator(
+              status: controller.productDetailStatus.value,
+              successWidget: () {
+                final product = controller.productDetail.value;
+                if (product == null) return const SizedBox();
 
-              return SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // ── Images ──
-                    ProductImageCarousel(images: product.images),
+                return SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // ── Images ──
+                      ProductImageCarousel(images: product.images),
 
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // ── Title, Brand, Price ──
-                          ProductHeader(
-                            title: product.title,
-                            brand: product.brand,
-                            price: product.price,
-                            discountPercentage: product.discountPercentage,
-                          ),
-                          const SizedBox(height: 16),
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // ── Title, Brand, Price ──
+                            ProductHeader(
+                              title: product.title,
+                              brand: product.brand,
+                              price: product.price,
+                              discountPercentage: product.discountPercentage,
+                            ),
+                            const SizedBox(height: 16),
 
-                          // ── Rating, Stock, Category ──
-                          ProductInfoChips(
-                            rating: product.rating,
-                            stock: product.stock,
-                            category: product.category,
-                          ),
-                          const SizedBox(height: 20),
-
-                          // ── Description, Details, Dimensions, Tags ──
-                          ProductDetailsSection(product: product),
-
-                          // ── Reviews ──
-                          if (product.reviews != null &&
-                              product.reviews!.isNotEmpty) ...[
+                            // ── Rating, Stock, Category ──
+                            ProductInfoChips(
+                              rating: product.rating,
+                              stock: product.stock,
+                              category: product.category,
+                            ),
                             const SizedBox(height: 20),
-                            Text(
-                              'Reviews (${product.reviews!.length})',
-                              style: theme.textTheme.titleMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            ...product.reviews!.map(
-                              (review) => ProductReviewCard(review: review),
-                            ),
-                          ],
 
-                          const SizedBox(height: 32),
-                        ],
+                            // ── Description, Details, Dimensions, Tags ──
+                            ProductDetailsSection(product: product),
+
+                            // ── Reviews ──
+                            if (product.reviews != null &&
+                                product.reviews!.isNotEmpty) ...[
+                              const SizedBox(height: 20),
+                              Text(
+                                'Reviews (${product.reviews!.length})',
+                                style: theme.textTheme.titleMedium?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              ...product.reviews!.map(
+                                (review) => ProductReviewCard(review: review),
+                              ),
+                            ],
+
+                            const SizedBox(height: 32),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          );
-        },
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

@@ -30,7 +30,7 @@ class ProductsScreen extends GetView<ProductsController> {
           preferredSize: const Size.fromHeight(kToolbarHeight),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-            child: TextField(
+            child: TextFormField(
               controller: controller.searchController,
               decoration: InputDecoration(
                 hintText: 'Search products',
@@ -69,6 +69,7 @@ class ProductsScreen extends GetView<ProductsController> {
                   ),
                 ),
               ),
+              onEditingComplete: () => controller.searchProducts(),
             ),
           ),
         ),

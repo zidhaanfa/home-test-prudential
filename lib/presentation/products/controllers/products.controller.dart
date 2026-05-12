@@ -189,6 +189,7 @@ class ProductsController extends GetxController {
     hasMore.value = true;
     total.value = 0;
     productsStatus.value = ApiCallStatus.loading;
+    update(['products']);
 
     final filter = _buildFilter();
     final result = await _getProductsUseCase.execute(filter);
@@ -453,7 +454,7 @@ class ProductsController extends GetxController {
     await fetchProducts();
   }
 
-  void searchProducts(String search) {
+  void searchProducts() {
     skip.value = 0;
     products.clear();
     fetchProducts();
