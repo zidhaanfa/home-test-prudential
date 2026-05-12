@@ -120,7 +120,7 @@ class DioClient {
 
     try {
       final response = await Dio().post(
-        Endpoint.sso.refresh,
+        Endpoint.auth.refresh,
         data: {'refresh_token': refreshToken},
       );
 

@@ -12,22 +12,22 @@ class LoginController extends BaseController {
   LoginController({required this.loginUseCase});
 
   final formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController();
+  final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
   final isObscure = true.obs;
 
   @override
   void onInit() {
-    emailController.text = 'zidanfath.code@gmail.comm';
-    passwordController.text = 'Masuk123';
+    usernameController.text = 'emilys';
+    passwordController.text = 'emilyspass';
 
     super.onInit();
   }
 
   @override
   void onClose() {
-    emailController.dispose();
+    usernameController.dispose();
     passwordController.dispose();
     super.onClose();
   }
@@ -38,14 +38,14 @@ class LoginController extends BaseController {
     if (!formKey.currentState!.validate()) return;
 
     final params = LoginParams(
-      email: emailController.text.trim(),
+      username: usernameController.text.trim(),
       password: passwordController.text,
     );
 
     await callUseCase(
       loginUseCase.execute(params),
-      onSuccess: (user) {
-        SnackbarHelper.showSuccess('Welcome back, ${user.roleName}');
+      onSuccess: (login) {
+        SnackbarHelper.showSuccess('Welcome back, ${login.username}');
         Get.offAllNamed(Routes.home);
       },
     );

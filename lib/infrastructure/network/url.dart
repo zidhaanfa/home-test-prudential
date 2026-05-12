@@ -5,15 +5,15 @@ import 'environments.dart';
 // ─── Path Segments ──────────────────────────────────────────
 
 /// Konstanta path segment, menghindari typo pada string path.
-class PathSegment {
-  static const String banner = '/assets/banner/';
-  static const String v1 = '/v1';
-  static const String v2 = '/v2';
-  static const String api = '/api';
-  static const String nexbill = '/nexbill';
-  static const String nexads = '/nexads';
-  static const String public = '/public';
-}
+// class PathSegment {
+//   static const String banner = '/assets/banner/';
+//   static const String v1 = '/v1';
+//   static const String v2 = '/v2';
+//   static const String api = '/api';
+//   static const String nexbill = '/nexbill';
+//   static const String nexads = '/nexads';
+//   static const String public = '/public';
+// }
 
 // ─── App Cast URLs ──────────────────────────────────────────
 
@@ -33,46 +33,7 @@ class Domain {
   static EnvironmentConfig get _cfg => ConfigEnvironments.config;
 
   // ── Backend Services (API v1) ──
-  static String get sso => '${_cfg.sso}${PathSegment.api}${PathSegment.v1}';
-  static String get billing =>
-      '${_cfg.billing}${PathSegment.api}${PathSegment.v1}';
-  static String get odp => '${_cfg.odp}${PathSegment.api}${PathSegment.v1}';
-  static String get homepass =>
-      '${_cfg.homepass}${PathSegment.api}${PathSegment.v1}';
-  static String get transaction =>
-      '${_cfg.transaction}${PathSegment.api}${PathSegment.v1}';
-  static String get nextune =>
-      '${_cfg.nextune}${PathSegment.api}${PathSegment.v1}';
-  static String get nexadmin =>
-      '${_cfg.nexadmin}${PathSegment.api}${PathSegment.v1}';
-  static String get nexads =>
-      '${_cfg.nexads}${PathSegment.api}${PathSegment.v1}';
-  static String get nexpayment =>
-      '${_cfg.nexpayment}${PathSegment.api}${PathSegment.v1}';
-  static String get nexreward =>
-      '${_cfg.nexreward}${PathSegment.api}${PathSegment.v1}';
-
-  // ── CDN ──
-  static String get cdnNexBillPackages =>
-      '${_cfg.cdn}${PathSegment.nexbill}/packages';
-  static String get cdnNexAds => '${_cfg.cdn}${PathSegment.nexads}';
-
-  // ── FZ ──
-  static String get fzAdmin =>
-      '${_cfg.fzAdmin}${PathSegment.api}${PathSegment.v2}';
-  static String get fzContent =>
-      '${_cfg.fzContent}${PathSegment.v1}${PathSegment.public}${PathSegment.api}';
-  static String get fzCdn => _cfg.fzCdn;
-
-  // ── Firebase ──
-  static String get firebaseAndroidApiKey => _cfg.firebaseAndroidApiKey;
-  static String get firebaseAndroidAppId => _cfg.firebaseAndroidAppId;
-  static String get firebaseMessagingSenderId => _cfg.firebaseMessagingSenderId;
-  static String get firebaseProjectId => _cfg.firebaseProjectId;
-  static String get firebaseStorageBucket => _cfg.firebaseStorageBucket;
-  static String get firebaseIosApiKey => _cfg.firebaseIosApiKey;
-  static String get firebaseIosAppId => _cfg.firebaseIosAppId;
-  static String get firebaseBundleId => _cfg.firebaseBundleId;
+  static String get api => _cfg.api;
 }
 
 // ─── URL Endpoints ──────────────────────────────────────────
@@ -88,25 +49,18 @@ class Domain {
 class Endpoint {
   Endpoint._();
 
-  // ── SSO ──
-  static final sso = _SsoEndpoints();
+  // ── Auth ──
+  static final auth = _AuthEndpoints();
 
-  // ── Nexadmin ──
-  static final nexadmin = _NexadminEndpoints();
-
-  // ── Billing ──
-  static final billing = _BillingEndpoints();
+  // ── Product ──
+  static final products = _ProductEndpoints();
 }
 
-class _SsoEndpoints {
-  String get login => '${Domain.sso}/auth/login';
-  String get refresh => '${Domain.sso}/auth/refresh';
+class _AuthEndpoints {
+  String get login => '${Domain.api}/auth/login';
+  String get refresh => '${Domain.api}/auth/refresh';
 }
 
-class _NexadminEndpoints {
-  String get banners => '${Domain.nexadmin}/banners/active';
-}
-
-class _BillingEndpoints {
-  String get customerDetail => '${Domain.billing}/customer-details/me';
+class _ProductEndpoints {
+  String get products => '${Domain.api}/products';
 }

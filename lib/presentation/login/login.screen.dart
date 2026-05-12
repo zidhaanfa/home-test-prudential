@@ -41,21 +41,18 @@ class LoginScreen extends GetView<LoginController> {
                 ),
                 const SizedBox(height: 48),
                 TextFormField(
-                  controller: controller.emailController,
-                  keyboardType: TextInputType.emailAddress,
+                  controller: controller.usernameController,
+                  keyboardType: TextInputType.name,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    if (!value.contains('@')) {
-                      return 'Please enter a valid email';
+                      return 'Please enter your username';
                     }
                     return null;
                   },
                   decoration: InputDecoration(
-                    labelText: 'Email',
-                    hintText: 'Enter your email',
-                    prefixIcon: const Icon(Icons.email_outlined),
+                    labelText: 'Username',
+                    hintText: 'Enter your username',
+                    prefixIcon: const Icon(Icons.person_outline),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),

@@ -1,13 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import '../../../../domain/auth/entities/user_entity.dart';
+import '../../../../domain/auth/entities/login_entity.dart';
 import '../../../../domain/auth/repositories/auth_repository.dart';
 import '../../../../domain/core/errors/failures.dart';
 import '../../../platform/secure_storage/flutter_secure_storage_impl.dart';
 import '../../../platform/secure_storage/secure_storage.dart';
 import '../../../platform/storage/get_storage_impl.dart';
 import '../../services/auth_api_service.dart';
-import '../models/user_model.dart';
+import '../models/login_model.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthApiService apiService;
@@ -21,15 +21,14 @@ class AuthRepositoryImpl implements AuthRepository {
   });
 
   @override
-  Future<Either<Failure, UserEntity>> login(
-    String email,
+  Future<Either<Failure, LoginEntity>> login(
+    String username,
     String password,
   ) async {
     try {
       final response = await apiService.login({
-        'key': email,
+        'username': username,
         'password': password,
-        'type': 'customer',
       });
 
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -41,19 +40,19 @@ class AuthRepositoryImpl implements AuthRepository {
           );
         }
 
-        final userModel = UserModel.fromJson(data);
+        final loginModel = LoginModel.fromJson(data);
 
         // Simpan token ke SecureStorage (encrypted)
         await secureStorage.write(
           SecureStorageKey.accessToken,
-          userModel.accessToken,
+          loginModel.accessToken,
         );
         await secureStorage.write(
           SecureStorageKey.refreshToken,
-          userModel.refreshToken,
+          loginModel.refreshToken,
         );
 
-        return Right(userModel);
+        return Right(loginModel);
       } else {
         return Left(ServerFailure(response.statusMessage ?? 'Server Error'));
       }

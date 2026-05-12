@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'config/error/global_error_handler.dart';
-import 'config/firebase/firebase_service.dart';
-import 'config/firebase/firebase_messaging_service.dart';
-import 'config/firebase/remote_config_service.dart';
-import 'config/lifecycle/app_lifecycle_service.dart';
-import 'config/mqtt/mqtt_service.dart';
+// import 'config/firebase/firebase_service.dart';
+// import 'config/firebase/firebase_messaging_service.dart';
+// import 'config/firebase/remote_config_service.dart';
+// import 'config/lifecycle/app_lifecycle_service.dart';
+// import 'config/mqtt/mqtt_service.dart';
 import 'config/notifications/notifications.dart';
 import 'infrastructure/navigation/navigation.dart';
 import 'infrastructure/navigation/routes.dart';
@@ -24,7 +24,7 @@ void main() {
     await _initializeApp();
 
     /// Register FCM background handler (HARUS sebelum runApp)
-    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+    // FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
     var initialRoute = await Routes.initialRoute;
 
@@ -50,24 +50,24 @@ Future<void> _initializeApp() async {
     await GetStorage.init();
 
     /// Initialize Firebase Core
-    await FirebaseService.init();
+    // await FirebaseService.init();
 
     /// Initialize Notifications (local)
     await NotificationsHelper.init();
 
     /// Initialize Firebase Messaging (FCM)
-    final fcmService = Get.put(FirebaseMessagingService(), permanent: true);
-    await fcmService.init();
+    // final fcmService = Get.put(FirebaseMessagingService(), permanent: true);
+    // await fcmService.init();
 
     /// Initialize Firebase Remote Config
-    final rcService = Get.put(RemoteConfigService(), permanent: true);
-    await rcService.init();
+    // fi nal rcService = Get.put(RemoteConfigService(), permanent: true);
+    // await rcService.init();
 
     /// Initialize MQTT Service (global singleton)
-    Get.put(MqttService(), permanent: true);
+    // Get.put(MqttService(), permanent: true);
 
     /// Initialize App Lifecycle Observer (MQTT reconnect, refresh hooks)
-    Get.put(AppLifecycleService(), permanent: true);
+    // Get.put(AppLifecycleService(), permanent: true);
   } catch (e, stack) {
     LoggerHelper.e('Initialization Error', e, stack);
     rethrow;

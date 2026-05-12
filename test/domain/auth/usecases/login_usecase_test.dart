@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:home_test_prudential/domain/auth/entities/login_entity.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:home_test_prudential/domain/auth/entities/user_entity.dart';
 import 'package:home_test_prudential/domain/auth/repositories/auth_repository.dart';
 import 'package:home_test_prudential/domain/auth/usecases/login_usecase.dart';
 import 'package:home_test_prudential/domain/core/errors/failures.dart';
@@ -19,16 +19,16 @@ void main() {
     loginUseCase = LoginUseCase(mockAuthRepository);
   });
 
-  final tParams = LoginParams(
-    email: 'test@example.com',
-    password: 'password123',
-  );
+  final tParams = LoginParams(username: 'emilys', password: 'emilyspass');
 
-  final tUser = UserEntity(
-    roleId: '1',
-    roleName: 'customer',
-    appsId: 'app-123',
-    permissionToken: 'perm-token',
+  final tUser = LoginEntity(
+    id: 1,
+    username: 'username',
+    email: 'email',
+    firstName: 'firstName',
+    lastName: 'lastName',
+    gender: 'gender',
+    image: 'image',
     accessToken: 'access-token',
     refreshToken: 'refresh-token',
   );
@@ -45,7 +45,7 @@ void main() {
 
       // Assert
       expect(result, Right(tUser));
-      verify(mockAuthRepository.login(tParams.email, tParams.password));
+      verify(mockAuthRepository.login(tParams.username, tParams.password));
       verifyNoMoreInteractions(mockAuthRepository);
     });
 
@@ -64,7 +64,7 @@ void main() {
         (failure) => expect(failure.message, 'Invalid credentials'),
         (_) => fail('Expected Left but got Right'),
       );
-      verify(mockAuthRepository.login(tParams.email, tParams.password));
+      verify(mockAuthRepository.login(tParams.username, tParams.password));
       verifyNoMoreInteractions(mockAuthRepository);
     });
   });

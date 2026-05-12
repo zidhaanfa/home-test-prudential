@@ -7,7 +7,7 @@ import 'dart:async' as _i4;
 
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:home_test_prudential/domain/auth/entities/user_entity.dart'
+import 'package:home_test_prudential/domain/auth/entities/login_entity.dart'
     as _i6;
 import 'package:home_test_prudential/domain/auth/repositories/auth_repository.dart'
     as _i3;
@@ -42,21 +42,21 @@ class MockAuthRepository extends _i1.Mock implements _i3.AuthRepository {
   }
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.UserEntity>> login(
+  _i4.Future<_i2.Either<_i5.Failure, _i6.LoginEntity>> login(
     String? email,
     String? password,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#login, [email, password]),
             returnValue:
-                _i4.Future<_i2.Either<_i5.Failure, _i6.UserEntity>>.value(
-                  _FakeEither_0<_i5.Failure, _i6.UserEntity>(
+                _i4.Future<_i2.Either<_i5.Failure, _i6.LoginEntity>>.value(
+                  _FakeEither_0<_i5.Failure, _i6.LoginEntity>(
                     this,
                     Invocation.method(#login, [email, password]),
                   ),
                 ),
           )
-          as _i4.Future<_i2.Either<_i5.Failure, _i6.UserEntity>>);
+          as _i4.Future<_i2.Either<_i5.Failure, _i6.LoginEntity>>);
 
   @override
   _i4.Future<_i2.Either<_i5.Failure, void>> logout() =>

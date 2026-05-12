@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
-import '../../config/mqtt/mqtt_service.dart';
 import '../../utils/helper/logger.dart';
 
 /// Global App Lifecycle Observer.
@@ -77,7 +76,7 @@ class AppLifecycleService extends GetxController with WidgetsBindingObserver {
     LoggerHelper.i('AppLifecycle: ▶️ App Resumed');
 
     // ── Reconnect MQTT ──
-    _reconnectMqtt();
+    // _reconnectMqtt();
 
     // ── Notify semua registered callbacks ──
     for (final callback in _onResumeCallbacks) {
@@ -93,7 +92,7 @@ class AppLifecycleService extends GetxController with WidgetsBindingObserver {
     LoggerHelper.i('AppLifecycle: ⏸️ App Paused');
 
     // ── Disconnect MQTT untuk hemat baterai ──
-    _disconnectMqtt();
+    // _disconnectMqtt();
 
     // ── Notify semua registered callbacks ──
     for (final callback in _onPauseCallbacks) {
@@ -112,36 +111,36 @@ class AppLifecycleService extends GetxController with WidgetsBindingObserver {
   /// App di-terminate
   void _onAppDetached() {
     LoggerHelper.d('AppLifecycle: 🛑 App Detached');
-    _disconnectMqtt();
+    // _disconnectMqtt();
   }
 
   // ═══════════════════════════════════════════════════════════
   //  MQTT LIFECYCLE
   // ═══════════════════════════════════════════════════════════
 
-  void _reconnectMqtt() {
-    try {
-      final mqtt = Get.find<MqttService>();
-      if (!mqtt.isConnected) {
-        LoggerHelper.i('AppLifecycle: 🔄 Reconnecting MQTT...');
-        mqtt.connect();
-      }
-    } catch (_) {
-      // MqttService belum di-register atau belum connect sebelumnya
-    }
-  }
+  // void _reconnectMqtt() {
+  //   try {
+  //     final mqtt = Get.find<MqttService>();
+  //     if (!mqtt.isConnected) {
+  //       LoggerHelper.i('AppLifecycle: 🔄 Reconnecting MQTT...');
+  //       mqtt.connect();
+  //     }
+  //   } catch (_) {
+  //     // MqttService belum di-register atau belum connect sebelumnya
+  //   }
+  // }
 
-  void _disconnectMqtt() {
-    try {
-      final mqtt = Get.find<MqttService>();
-      if (mqtt.isConnected) {
-        LoggerHelper.i('AppLifecycle: ⏹️ Disconnecting MQTT...');
-        mqtt.disconnect();
-      }
-    } catch (_) {
-      // MqttService belum di-register
-    }
-  }
+  // void _disconnectMqtt() {
+  //   try {
+  //     final mqtt = Get.find<MqttService>();
+  //     if (mqtt.isConnected) {
+  //       LoggerHelper.i('AppLifecycle: ⏹️ Disconnecting MQTT...');
+  //       mqtt.disconnect();
+  //     }
+  //   } catch (_) {
+  //     // MqttService belum di-register
+  //   }
+  // }
 
   // ═══════════════════════════════════════════════════════════
   //  CALLBACK REGISTRATION
