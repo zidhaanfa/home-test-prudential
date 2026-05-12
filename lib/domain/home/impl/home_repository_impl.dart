@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import '../../../../domain/core/errors/failures.dart';
-import '../../../../domain/home/entities/banner_entity.dart';
-import '../../../../domain/home/repositories/home_repository.dart';
-import '../../services/home_api_service.dart';
-import '../../../../utils/json_parser.dart';
+import '../../core/errors/failures.dart';
+import '../entities/banner_entity.dart';
+import '../repositories/home_repository.dart';
+import '../../../infrastructure/dal/services/home_api_service.dart';
+import '../../../utils/json_parser.dart';
 import '../models/banner_model.dart';
 
 class HomeRepositoryImpl implements HomeRepository {

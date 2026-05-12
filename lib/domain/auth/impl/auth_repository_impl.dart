@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import '../../../../domain/auth/entities/login_entity.dart';
-import '../../../../domain/auth/repositories/auth_repository.dart';
-import '../../../../domain/core/errors/failures.dart';
-import '../../../platform/secure_storage/flutter_secure_storage_impl.dart';
-import '../../../platform/secure_storage/secure_storage.dart';
-import '../../../platform/storage/get_storage_impl.dart';
-import '../../services/auth_api_service.dart';
+import '../entities/login_entity.dart';
+import '../repositories/auth_repository.dart';
+import '../../core/errors/failures.dart';
+import '../../../infrastructure/platform/secure_storage/flutter_secure_storage_impl.dart';
+import '../../../infrastructure/platform/secure_storage/secure_storage.dart';
+import '../../../infrastructure/platform/storage/get_storage_impl.dart';
+import '../../../infrastructure/dal/services/auth_api_service.dart';
 import '../models/login_model.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
