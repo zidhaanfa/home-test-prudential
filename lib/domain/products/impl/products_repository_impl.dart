@@ -14,6 +14,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
   ProductsRepositoryImpl({required this.apiService});
 
   @override
+  // get products list
   Future<Either<Failure, ProductsEntity>> getProducts(
     PaginationFilter filter,
   ) async {
@@ -36,4 +37,28 @@ class ProductsRepositoryImpl implements ProductsRepository {
       return Left(ServerFailure('Unexpected Error Occurred'));
     }
   }
+
+  // get product detail
+  Future<Either<Failure, ProductEntity>> getProductDetail(
+    String productId,
+  ) async {
+    try {
+      final response = await apiService.getProductDetail(productId);
+      if (response.statusCode == 200) {
+        final product = JsonParser.parseObject(
+          json: response.data,
+          fromJson: ProductModel.fromJson,
+        );
+        return Right(product);
+      } else {
+        return Left(ServerFailure(response.statusMessage ?? 'Server Error'));
+      }
+    } on DioException catch (e) {
+      return Left(ServerFailure(e.message ?? 'Network Error'));
+    } catch (e) {
+      return Left(ServerFailure('Unexpected Error Occurred'));
+    }
+  }
+
+  // create product
 }

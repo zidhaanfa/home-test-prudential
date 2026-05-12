@@ -19,7 +19,7 @@ class LoginControllerBinding extends Bindings {
     Get.lazyPut<AuthRepository>(
       () => AuthRepositoryImpl(
         apiService: Get.find(),
-        storage: Get.find(),
+        // storage: Get.find(),
         secureStorage: Get.find<FlutterSecureStorageImpl>(),
       ),
     );

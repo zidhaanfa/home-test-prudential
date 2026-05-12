@@ -5,18 +5,18 @@ import '../repositories/auth_repository.dart';
 import '../../core/errors/failures.dart';
 import '../../../infrastructure/platform/secure_storage/flutter_secure_storage_impl.dart';
 import '../../../infrastructure/platform/secure_storage/secure_storage.dart';
-import '../../../infrastructure/platform/storage/get_storage_impl.dart';
+// import '../../../infrastructure/platform/storage/get_storage_impl.dart';
 import '../../../infrastructure/dal/services/auth_api_service.dart';
 import '../models/login_model.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthApiService apiService;
-  final GetStorageImpl storage;
+  // final GetStorageImpl storage;
   final SecureStorage secureStorage;
 
   AuthRepositoryImpl({
     required this.apiService,
-    required this.storage,
+    // required this.storage,
     required this.secureStorage,
   });
 
@@ -49,7 +49,6 @@ class AuthRepositoryImpl implements AuthRepository {
           SecureStorageKey.refreshToken,
           loginModel.refreshToken,
         );
-
         return Right(loginModel);
       } else {
         return Left(ServerFailure(response.statusMessage ?? 'Server Error'));

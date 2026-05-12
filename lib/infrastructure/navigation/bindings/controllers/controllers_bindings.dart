@@ -3,4 +3,3 @@ export 'package:home_test_prudential/infrastructure/navigation/bindings/controll
 export 'package:home_test_prudential/infrastructure/navigation/bindings/controllers/navigation.controller.binding.dart';
 export 'package:home_test_prudential/infrastructure/navigation/bindings/controllers/products.controller.binding.dart';
 export 'package:home_test_prudential/infrastructure/navigation/bindings/controllers/profile.controller.binding.dart';
-export 'package:home_test_prudential/infrastructure/navigation/bindings/controllers/user.controller.binding.dart';

@@ -35,11 +35,6 @@ class Nav {
       binding: LoginControllerBinding(),
     ),
     GetPage(
-      name: Routes.user,
-      page: () => const UserScreen(),
-      binding: UserControllerBinding(),
-    ),
-    GetPage(
       name: Routes.navigation,
       page: () => const NavigationScreen(),
       binding: NavigationControllerBinding(),

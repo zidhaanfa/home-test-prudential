@@ -11,4 +11,8 @@ class ProductsApiService {
       queryParameters: queryParameters,
     );
   }
+
+  Future<Response> getProductDetail(String productId) async {
+    return await _noAuthClient.get('${Endpoint.products.products}/$productId');
+  }
 }
