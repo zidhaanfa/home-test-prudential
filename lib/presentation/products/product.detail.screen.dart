@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../components/molecules/custom_layout.dart';
 import '../../components/molecules/my_widget_animator.dart';
+import '../../infrastructure/navigation/routes.dart';
 import 'controllers/products.controller.dart';
 import 'widgets/product_detail/product_details_section.dart';
 import 'widgets/product_detail/product_header.dart';
@@ -17,6 +18,16 @@ class ProductDetailScreen extends GetView<ProductsController> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    final ProductsController controller = Get.put(
+      ProductsController(
+        getProductsUseCase: Get.find(),
+        getProductDetailUseCase: Get.find(),
+        createProductUseCase: Get.find(),
+        deleteProductUseCase: Get.find(),
+        updateProductUseCase: Get.find(),
+      ),
+    );
+
     // Ambil product ID dari arguments dan fetch detail
     final productId = Get.arguments;
     if (productId != null) {
@@ -28,6 +39,15 @@ class ProductDetailScreen extends GetView<ProductsController> {
         title: const Text('Product Detail'),
         centerTitle: true,
         actions: [
+          IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: () {
+              final productDetail = controller.productDetail.value;
+              if (productDetail != null) {
+                Get.toNamed(Routes.updateProduct, arguments: productDetail);
+              }
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.delete),
             onPressed: () {

@@ -19,4 +19,5 @@ class Routes {
   static const comingSoon = '/coming-soon';
   static const addProduct = '/add-product';
   static const productDetail = '/product-detail';
+  static const updateProduct = '/update-product';
 }

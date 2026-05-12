@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../presentation/products/product.detail.screen.dart';
+import '../../presentation/products/update.product.screen.dart';
 import '../../presentation/screens.dart';
 import '../network/environments.dart';
 import 'bindings/controllers/controllers_bindings.dart';
@@ -53,6 +54,11 @@ class Nav {
     GetPage(
       name: Routes.productDetail,
       page: () => const ProductDetailScreen(),
+      binding: ProductsControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.updateProduct,
+      page: () => const UpdateProductScreen(),
       binding: ProductsControllerBinding(),
     ),
     GetPage(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:home_test_prudential/domain/products/entities/products_entity.dart';
@@ -11,6 +12,7 @@ import '../../../domain/products/models/products_model.dart';
 import '../../../domain/products/usecases/create_product_usecase.dart';
 import '../../../domain/products/usecases/delete_product_usecase.dart';
 import '../../../domain/products/usecases/get_productDetail_usecase.dart';
+import '../../../domain/products/usecases/update_product_usecase.dart';
 import '../../../utils/config.dart';
 import '../../../utils/helper/snackbar.dart';
 
@@ -19,16 +21,19 @@ class ProductsController extends GetxController {
   final GetProductDetailUseCase _getProductDetailUseCase;
   final CreateProductUseCase _createProductUseCase;
   final DeleteProductUseCase _deleteProductUseCase;
+  final UpdateProductUseCase _updateProductUseCase;
 
   ProductsController({
     required GetProductsUseCase getProductsUseCase,
     required GetProductDetailUseCase getProductDetailUseCase,
     required CreateProductUseCase createProductUseCase,
     required DeleteProductUseCase deleteProductUseCase,
+    required UpdateProductUseCase updateProductUseCase,
   }) : _getProductsUseCase = getProductsUseCase,
        _getProductDetailUseCase = getProductDetailUseCase,
        _createProductUseCase = createProductUseCase,
-       _deleteProductUseCase = deleteProductUseCase;
+       _deleteProductUseCase = deleteProductUseCase,
+       _updateProductUseCase = updateProductUseCase;
 
   // ═══════════════════════════════════════════════════════════
   //  STATUS — setiap fetch punya ApiCallStatus sendiri
@@ -39,6 +44,7 @@ class ProductsController extends GetxController {
   final Rx<ApiCallStatus> productDetailStatus = ApiCallStatus.holding.obs;
   final Rx<ApiCallStatus> productCreateStatus = ApiCallStatus.holding.obs;
   final Rx<ApiCallStatus> productDeleteStatus = ApiCallStatus.holding.obs;
+  final Rx<ApiCallStatus> productUpdateStatus = ApiCallStatus.holding.obs;
 
   // ═══════════════════════════════════════════════════════════
   //  DATA
@@ -82,6 +88,20 @@ class ProductsController extends GetxController {
   final stockController = TextEditingController();
   final brandController = TextEditingController();
   final skuController = TextEditingController();
+
+  //═══════════════════════════════════════════════════════════
+  // UPDATE PRODUCT FORM
+  //═══════════════════════════════════════════════════════════
+  final updateProductFormKey = GlobalKey<FormState>();
+  final updateTitleController = TextEditingController();
+  final updateDescriptionController = TextEditingController();
+  final updateCategoryController = TextEditingController();
+  final updatePriceController = TextEditingController();
+  final updateDiscountController = TextEditingController();
+  final updateRatingController = TextEditingController();
+  final updateStockController = TextEditingController();
+  final updateBrandController = TextEditingController();
+  final updateSkuController = TextEditingController();
 
   // ═══════════════════════════════════════════════════════════
   //  CONFIG
@@ -162,7 +182,7 @@ class ProductsController extends GetxController {
   //  PUBLIC API — LIST
   // ═══════════════════════════════════════════════════════════
 
-  /// Fetch halaman pertama (reset pagination).
+  /// Get all products
   Future<void> fetchProducts() async {
     // Reset pagination state
     skip.value = 0;
@@ -194,7 +214,7 @@ class ProductsController extends GetxController {
     );
   }
 
-  /// Load halaman berikutnya (append ke list).
+  /// Get next products
   Future<void> loadMoreProducts() async {
     if (!hasMore.value || isLoadingMore.value) return;
 
@@ -307,6 +327,86 @@ class ProductsController extends GetxController {
     }
   }
 
+  // update product
+  void loadProductForUpdate(ProductEntity product) {
+    updateTitleController.text = product.title;
+    updateDescriptionController.text = product.description;
+    updateCategoryController.text = product.category;
+    updatePriceController.text = product.price.toString();
+    updateDiscountController.text = product.discountPercentage.toString();
+    updateRatingController.text = product.rating.toString();
+    updateStockController.text = product.stock.toString();
+    updateBrandController.text = product.brand;
+    updateSkuController.text = product.sku;
+  }
+
+  void resetUpdateProductForm() {
+    updateTitleController.clear();
+    updateDescriptionController.clear();
+    updateCategoryController.clear();
+    updatePriceController.clear();
+    updateDiscountController.clear();
+    updateRatingController.clear();
+    updateStockController.clear();
+    updateBrandController.clear();
+    updateSkuController.clear();
+  }
+
+  Future<void> updateProduct() async {
+    if (!updateProductFormKey.currentState!.validate()) return;
+
+    productUpdateStatus.value = ApiCallStatus.loading;
+    EasyLoading.show(status: 'Updating product...');
+
+    final product = ProductModel(
+      id: productDetail.value!.id,
+      title: updateTitleController.text.trim(),
+      description: updateDescriptionController.text.trim(),
+      category: updateCategoryController.text.trim(),
+      price: double.tryParse(updatePriceController.text.trim()) ?? 0.0,
+      discountPercentage:
+          double.tryParse(updateDiscountController.text.trim()) ?? 0.0,
+      rating: double.tryParse(updateRatingController.text.trim()) ?? 0.0,
+      stock: int.tryParse(updateStockController.text.trim()) ?? 0,
+      brand: updateBrandController.text.trim(),
+      sku: updateSkuController.text.trim(),
+      tags: null,
+      weight: null,
+      dimensions: null,
+      warrantyInformation: null,
+      shippingInformation: null,
+      availabilityStatus: null,
+      reviews: null,
+      returnPolicy: null,
+      minimumOrderQuantity: null,
+      meta: null,
+      thumbnail: null,
+      images: null,
+    );
+
+    try {
+      final result = await _updateProductUseCase.execute(product);
+      result.fold(
+        (error) {
+          productUpdateStatus.value = ApiCallStatus.error;
+          EasyLoading.dismiss();
+          SnackbarHelper.showError(error.message);
+        },
+        (data) {
+          productUpdateStatus.value = ApiCallStatus.success;
+          EasyLoading.dismiss();
+          SnackbarHelper.showSuccess('Product updated successfully!');
+          resetUpdateProductForm();
+          refreshProducts();
+        },
+      );
+    } catch (e) {
+      productUpdateStatus.value = ApiCallStatus.error;
+      EasyLoading.dismiss();
+      SnackbarHelper.showError(e.toString());
+    }
+  }
+
   // delete product
   Future<void> deleteProduct(String id) async {
     productDeleteStatus.value = ApiCallStatus.loading;
@@ -376,5 +476,39 @@ class ProductsController extends GetxController {
       skip: skip.value,
       select: searchController.text,
     );
+  }
+
+  Widget buildTextField({
+    required TextEditingController controller,
+    required String label,
+    required String hint,
+    required IconData icon,
+    int maxLines = 1,
+    TextInputType? keyboardType,
+    List<TextInputFormatter>? inputFormatters,
+    String? Function(String?)? validator,
+  }) {
+    return TextFormField(
+      controller: controller,
+      maxLines: maxLines,
+      keyboardType: keyboardType,
+      inputFormatters: inputFormatters,
+      validator: validator,
+      decoration: InputDecoration(
+        labelText: label,
+        hintText: hint,
+        prefixIcon: Icon(icon),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        filled: true,
+        fillColor: Colors.grey[50],
+      ),
+    );
+  }
+
+  String? requiredValidator(String? value, String fieldName) {
+    if (value == null || value.trim().isEmpty) {
+      return '$fieldName is required';
+    }
+    return null;
   }
 }
