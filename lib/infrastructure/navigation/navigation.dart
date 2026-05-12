@@ -46,7 +46,7 @@ class Nav {
     ),
     GetPage(
       name: Routes.addProduct,
-      page: () => const ProductsScreen(),
+      page: () => const AddProductScreen(),
       binding: ProductsControllerBinding(),
     ),
     GetPage(

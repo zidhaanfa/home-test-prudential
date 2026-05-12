@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:home_test_prudential/domain/products/entities/products_entity.dart';
 import 'package:home_test_prudential/domain/products/usecases/get_products_usecase.dart';
 import 'package:home_test_prudential/infrastructure/dal/models/pagination_filter.dart';
+import 'package:home_test_prudential/presentation/navigation/controllers/navigation.controller.dart';
 
 import '../../../config/lifecycle/app_lifecycle_service.dart';
 import '../../../domain/products/models/products_model.dart';
@@ -62,6 +64,21 @@ class ProductsController extends GetxController {
   final searchController = TextEditingController();
 
   // ═══════════════════════════════════════════════════════════
+  //  ADD PRODUCT FORM
+  // ═══════════════════════════════════════════════════════════
+
+  final addProductFormKey = GlobalKey<FormState>();
+  final titleController = TextEditingController();
+  final descriptionController = TextEditingController();
+  final categoryController = TextEditingController();
+  final priceController = TextEditingController();
+  final discountController = TextEditingController();
+  final ratingController = TextEditingController();
+  final stockController = TextEditingController();
+  final brandController = TextEditingController();
+  final skuController = TextEditingController();
+
+  // ═══════════════════════════════════════════════════════════
   //  CONFIG
   // ═══════════════════════════════════════════════════════════
 
@@ -100,6 +117,16 @@ class ProductsController extends GetxController {
   void onClose() {
     scrollController.removeListener(_onScroll);
     scrollController.dispose();
+    searchController.dispose();
+    titleController.dispose();
+    descriptionController.dispose();
+    categoryController.dispose();
+    priceController.dispose();
+    discountController.dispose();
+    ratingController.dispose();
+    stockController.dispose();
+    brandController.dispose();
+    skuController.dispose();
     // Hapus callback saat controller di-dispose
     _lifecycleService?.removeOnResumeCallback(_onAppResumed);
     super.onClose();
@@ -217,28 +244,75 @@ class ProductsController extends GetxController {
     }
   }
 
-  /// create
-  Future<void> createProduct(ProductModel product) async {
+  /// Submit form add product.
+  Future<void> submitAddProduct() async {
+    if (!(addProductFormKey.currentState?.validate() ?? false)) return;
+
+    final product = ProductModel(
+      id: 0,
+      title: titleController.text.trim(),
+      description: descriptionController.text.trim(),
+      category: categoryController.text.trim(),
+      price: double.tryParse(priceController.text.trim()) ?? 0.0,
+      discountPercentage:
+          double.tryParse(discountController.text.trim()) ?? 0.0,
+      rating: double.tryParse(ratingController.text.trim()) ?? 0.0,
+      stock: int.tryParse(stockController.text.trim()) ?? 0,
+      brand: brandController.text.trim(),
+      sku: skuController.text.trim(),
+      tags: null,
+      weight: null,
+      dimensions: null,
+      warrantyInformation: null,
+      shippingInformation: null,
+      availabilityStatus: null,
+      reviews: null,
+      returnPolicy: null,
+      minimumOrderQuantity: null,
+      meta: null,
+      thumbnail: null,
+      images: null,
+    );
+
     productCreateStatus.value = ApiCallStatus.loading;
+    EasyLoading.show(status: 'Creating product...');
+
     try {
       final result = await _createProductUseCase.execute(product);
       result.fold(
         (error) {
           productCreateStatus.value = ApiCallStatus.error;
+          EasyLoading.dismiss();
           SnackbarHelper.showError(error.message);
-          update(['productDetail']);
         },
         (data) {
-          productDetail.value = data;
-          productDetailStatus.value = ApiCallStatus.success;
-          update(['productDetail']);
+          productCreateStatus.value = ApiCallStatus.success;
+          EasyLoading.dismiss();
+          SnackbarHelper.showSuccess('Product created successfully!');
+          resetAddProductForm();
+          fetchProducts();
+          final navigationController = Get.find<NavigationController>();
+          navigationController.changeTabIndex(0);
         },
       );
     } catch (e) {
-      productDetailStatus.value = ApiCallStatus.error;
+      productCreateStatus.value = ApiCallStatus.error;
+      EasyLoading.dismiss();
       SnackbarHelper.showError(e.toString());
-      update(['productDetail']);
     }
+  }
+
+  /// Reset semua form field add product.
+  void resetAddProductForm() {
+    titleController.clear();
+    descriptionController.clear();
+    categoryController.clear();
+    priceController.clear();
+    discountController.clear();
+    ratingController.clear();
+    stockController.clear();
+    brandController.clear();
+    skuController.clear();
   }
 
   /// Refresh — pull-to-refresh support.

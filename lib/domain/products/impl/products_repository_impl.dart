@@ -68,7 +68,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
   ) async {
     try {
       final response = await apiService.createProduct(data: product.toJson());
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         final product = JsonParser.parseObject(
           json: response.data,
           fromJson: ProductModel.fromJson,

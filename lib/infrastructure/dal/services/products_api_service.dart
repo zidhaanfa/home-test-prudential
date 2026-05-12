@@ -18,7 +18,7 @@ class ProductsApiService {
 
   // create product
   Future<Response> createProduct({Map<String, dynamic>? data}) async {
-    return await _noAuthClient.post(Endpoint.products.products, data: data);
+    return await _noAuthClient.post(Endpoint.products.create, data: data);
   }
 
   // update product

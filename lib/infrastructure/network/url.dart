@@ -63,4 +63,5 @@ class _AuthEndpoints {
 
 class _ProductEndpoints {
   String get products => '${Domain.api}/products';
+  String get create => '${Domain.api}/products/add';
 }
