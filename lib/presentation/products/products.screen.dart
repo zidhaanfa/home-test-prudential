@@ -32,13 +32,11 @@ class ProductsScreen extends GetView<ProductsController> {
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
             child: TextFormField(
               controller: controller.searchController,
+              textInputAction: TextInputAction.search,
+              onFieldSubmitted: (_) => controller.searchProducts(),
               decoration: InputDecoration(
                 hintText: 'Search products',
                 prefixIcon: const Icon(Icons.search),
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.clear),
-                  onPressed: () => controller.searchController.clear(),
-                ),
                 isDense: true,
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 8,
@@ -69,7 +67,6 @@ class ProductsScreen extends GetView<ProductsController> {
                   ),
                 ),
               ),
-              onEditingComplete: () => controller.searchProducts(),
             ),
           ),
         ),

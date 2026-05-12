@@ -14,6 +14,7 @@ import '../../../../domain/profile/impl/profile_repository_impl.dart';
 import '../../../../domain/profile/repositories/profile_repository.dart';
 import '../../../../domain/profile/usecases/get_profile_usecase.dart';
 import '../../../../presentation/navigation/controllers/navigation.controller.dart';
+import '../../../../presentation/profile/controllers/profile.controller.dart';
 import '../../../dal/services/auth_api_service.dart';
 import '../../../dal/services/products_api_service.dart';
 import '../../../dal/services/profile_api_service.dart';
@@ -65,6 +66,12 @@ class NavigationControllerBinding extends Bindings {
       () => GetProfileUseCase(repository: Get.find()),
     );
     Get.lazyPut<LogoutUseCase>(() => LogoutUseCase(Get.find()));
+    Get.lazyPut(
+      () => ProfileController(
+        getProfileUseCase: Get.find(),
+        logoutUseCase: Get.find(),
+      ),
+    );
     Get.lazyPut<NavigationController>(() => NavigationController());
   }
 }

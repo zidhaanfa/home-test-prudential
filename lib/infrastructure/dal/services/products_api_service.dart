@@ -11,8 +11,9 @@ class ProductsApiService {
   Dio get _authClient => DioClient.authClient(secureStorage);
 
   Future<Response> getProducts({Map<String, dynamic>? queryParameters}) async {
+    final isSearch = queryParameters != null && queryParameters.containsKey('q');
     return await _authClient.get(
-      Endpoint.products.products,
+      isSearch ? Endpoint.products.search : Endpoint.products.products,
       queryParameters: queryParameters,
     );
   }
