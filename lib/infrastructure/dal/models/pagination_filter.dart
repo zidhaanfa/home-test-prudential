@@ -2,15 +2,15 @@
 ///
 /// Biasa di-passing ke UseCase sebagai parameter.
 class PaginationFilter {
-  final int page;
+  final int skip;
   final int limit;
   final String? search;
 
-  const PaginationFilter({this.page = 1, this.limit = 15, this.search});
+  const PaginationFilter({this.skip = 1, this.limit = 15, this.search});
 
   /// Convert to Json/QueryParameters untuk Dio
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{'page': page, 'limit': limit};
+    final map = <String, dynamic>{'skip': skip, 'limit': limit};
 
     if (search != null && search!.isNotEmpty) {
       map['search'] = search;
@@ -20,9 +20,9 @@ class PaginationFilter {
   }
 
   /// Copy with helper
-  PaginationFilter copyWith({int? page, int? limit, String? search}) {
+  PaginationFilter copyWith({int? skip, int? limit, String? search}) {
     return PaginationFilter(
-      page: page ?? this.page,
+      skip: skip ?? this.skip,
       limit: limit ?? this.limit,
       search: search ?? this.search,
     );
