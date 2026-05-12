@@ -55,9 +55,19 @@ class Nav {
       binding: ProductsControllerBinding(),
     ),
     GetPage(
+      name: Routes.addProduct,
+      page: () => const ProductsScreen(),
+      binding: ProductsControllerBinding(),
+    ),
+    GetPage(
       name: Routes.profile,
       page: () => const ProfileScreen(),
       binding: ProfileControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.comingSoon,
+      page: () => const ComingSoonScreen(),
+      binding: ComingSoonControllerBinding(),
     ),
   ];
 }

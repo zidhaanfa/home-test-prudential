@@ -1,3 +1,4 @@
+export 'package:home_test_prudential/presentation/comingSoon/coming_soon.screen.dart';
 export 'package:home_test_prudential/presentation/home/home.screen.dart';
 export 'package:home_test_prudential/presentation/login/login.screen.dart';
 export 'package:home_test_prudential/presentation/navigation/navigation.screen.dart';

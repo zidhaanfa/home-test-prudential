@@ -1,11 +1,9 @@
 import 'package:get/get.dart';
 
-class NavigationController extends GetxController {
-  //TODO: Implement NavigationController
+class ComingSoonController extends GetxController {
+  //TODO: Implement ComingSoonController
 
   final count = 0.obs;
-  final tabIndex = 0.obs;
-
   @override
   void onInit() {
     super.onInit();
@@ -22,8 +20,4 @@ class NavigationController extends GetxController {
   }
 
   void increment() => count.value++;
-
-  void changeTabIndex(int index) {
-    tabIndex.value = index;
-  }
 }
