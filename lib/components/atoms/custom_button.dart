@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zidanfath_codebase/utils/config.dart';
+import '/utils/config.dart';
 
 import 'custom_text.dart';
 

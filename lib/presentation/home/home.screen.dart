@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:zidanfath_codebase/components/atoms/custom_button.dart';
-import 'package:zidanfath_codebase/components/atoms/custom_text.dart';
-import 'package:zidanfath_codebase/infrastructure/navigation/routes.dart';
-import 'package:zidanfath_codebase/utils/config.dart';
-import 'package:zidanfath_codebase/components/molecules/custom_cached_image.dart';
+import 'package:home_test_prudential/components/atoms/custom_button.dart';
+import 'package:home_test_prudential/components/atoms/custom_text.dart';
+import 'package:home_test_prudential/infrastructure/navigation/routes.dart';
+import 'package:home_test_prudential/utils/config.dart';
+import 'package:home_test_prudential/components/molecules/custom_cached_image.dart';
 
 import 'package:chucker_flutter/chucker_flutter.dart';
 

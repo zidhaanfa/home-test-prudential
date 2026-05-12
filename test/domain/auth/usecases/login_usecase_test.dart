@@ -2,10 +2,10 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:zidanfath_codebase/domain/auth/entities/user_entity.dart';
-import 'package:zidanfath_codebase/domain/auth/repositories/auth_repository.dart';
-import 'package:zidanfath_codebase/domain/auth/usecases/login_usecase.dart';
-import 'package:zidanfath_codebase/domain/core/errors/failures.dart';
+import 'package:home_test_prudential/domain/auth/entities/user_entity.dart';
+import 'package:home_test_prudential/domain/auth/repositories/auth_repository.dart';
+import 'package:home_test_prudential/domain/auth/usecases/login_usecase.dart';
+import 'package:home_test_prudential/domain/core/errors/failures.dart';
 
 @GenerateMocks([AuthRepository])
 import 'login_usecase_test.mocks.dart';

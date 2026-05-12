@@ -1,4 +1,4 @@
-package com.example.zidanfath_codebase
+package com.example.home_test_prudential
 
 import io.flutter.embedding.android.FlutterActivity
 

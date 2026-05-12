@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:zidanfath_codebase/infrastructure/network/dio_client.dart';
-import 'package:zidanfath_codebase/infrastructure/network/dio_wrapper.dart';
+import 'package:home_test_prudential/infrastructure/network/dio_client.dart';
+import 'package:home_test_prudential/infrastructure/network/dio_wrapper.dart';
 
 void main() {
   group('DioClient.noAuthClient', () {

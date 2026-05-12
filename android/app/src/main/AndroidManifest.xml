@@ -14,7 +14,7 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <application
-        android:label="zidanfath_codebase"
+        android:label="home_test_prudential"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'package:zidanfath_codebase/domain/core/errors/failures.dart';
-import 'package:zidanfath_codebase/domain/home/entities/banner_entity.dart';
-import 'package:zidanfath_codebase/domain/home/usecases/get_banners_usecase.dart';
-import 'package:zidanfath_codebase/presentation/home/controllers/home.controller.dart';
+import 'package:home_test_prudential/domain/core/errors/failures.dart';
+import 'package:home_test_prudential/domain/home/entities/banner_entity.dart';
+import 'package:home_test_prudential/domain/home/usecases/get_banners_usecase.dart';
+import 'package:home_test_prudential/presentation/home/controllers/home.controller.dart';
 
 import 'home_controller_test.mocks.dart';
 
