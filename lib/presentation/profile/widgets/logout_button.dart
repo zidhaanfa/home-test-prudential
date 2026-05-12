@@ -9,18 +9,21 @@ class LogoutButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 32),
-      child: ElevatedButton.icon(
-        onPressed: onPressed,
-        icon: const Icon(Icons.logout),
-        label: const Text('Logout'),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.red[50],
-          foregroundColor: Colors.red[700],
-          elevation: 0,
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-            side: BorderSide(color: Colors.red[100]!),
+      child: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton.icon(
+          onPressed: onPressed,
+          icon: const Icon(Icons.logout),
+          label: const Text('Logout'),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.red[50],
+            foregroundColor: Colors.red[700],
+            elevation: 0,
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+              side: BorderSide(color: Colors.red[100]!),
+            ),
           ),
         ),
       ),
