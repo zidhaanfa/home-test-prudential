@@ -113,11 +113,15 @@ class ProductsRepositoryImpl implements ProductsRepository {
 
   // delete product
   @override
-  Future<Either<Failure, bool>> deleteProduct(String id) async {
+  Future<Either<Failure, ProductEntity>> deleteProduct(String id) async {
     try {
       final response = await apiService.deleteProduct(id);
       if (response.statusCode == 200) {
-        return const Right(true);
+        final product = JsonParser.parseObject(
+          json: response.data,
+          fromJson: ProductModel.fromJson,
+        );
+        return Right(product);
       } else {
         return Left(ServerFailure(response.statusMessage ?? 'Server Error'));
       }

@@ -12,5 +12,5 @@ abstract class ProductsRepository {
     String id,
     ProductModel product,
   );
-  Future<Either<Failure, bool>> deleteProduct(String id);
+  Future<Either<Failure, ProductEntity>> deleteProduct(String id);
 }

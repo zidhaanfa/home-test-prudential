@@ -36,6 +36,8 @@ class ProductEntity {
     this.meta,
     this.thumbnail,
     this.images,
+    this.isDeleted,
+    this.deletedOn,
   });
 
   final int id;
@@ -60,6 +62,8 @@ class ProductEntity {
   final ProductMetaEntity? meta;
   final String? thumbnail;
   final List<String>? images;
+  final bool? isDeleted;
+  final DateTime? deletedOn;
 }
 
 class ProductDimensionsEntity {
