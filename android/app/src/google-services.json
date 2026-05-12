@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "585534373545",
+    "project_id": "prod-nexusapp",
+    "storage_bucket": "prod-nexusapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:585534373545:android:0aacf9f181b77d48d7f3b8",
+        "android_client_info": {
+          "package_name": "com.varnionfiberzone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHNHIzrHU6-eX0r5rDw9uYZdqUFPMb4rY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
