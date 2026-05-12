@@ -52,7 +52,8 @@ class ProductsController extends GetxController {
   /// Pagination
   final RxInt limit = 10.obs;
   final RxInt skip = 0.obs;
-  final RxString select = ''.obs;
+
+  final searchController = TextEditingController();
 
   // ═══════════════════════════════════════════════════════════
   //  CONFIG
@@ -236,7 +237,7 @@ class ProductsController extends GetxController {
     return PaginationFilter(
       limit: limit.value,
       skip: skip.value,
-      select: select.value,
+      select: searchController.text,
     );
   }
 }

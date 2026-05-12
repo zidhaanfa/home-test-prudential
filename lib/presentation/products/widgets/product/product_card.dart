@@ -25,9 +25,9 @@ class ProductCard extends StatelessWidget {
           color: Colors.grey[200],
           borderRadius: BorderRadius.circular(8),
         ),
-        child: product.images.isNotEmpty
+        child: product.images?.isNotEmpty == true
             ? Image.network(
-                product.images.first,
+                product.images!.first,
                 fit: BoxFit.cover,
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;
