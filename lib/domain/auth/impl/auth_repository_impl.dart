@@ -29,6 +29,7 @@ class AuthRepositoryImpl implements AuthRepository {
       final response = await apiService.login({
         'username': username,
         'password': password,
+        'expiresInMins': 30,
       });
 
       if (response.statusCode == 200 || response.statusCode == 201) {
