@@ -44,5 +44,10 @@ class Nav {
       page: () => const UserScreen(),
       binding: UserControllerBinding(),
     ),
+    GetPage(
+      name: Routes.NAVIGATION,
+      page: () => const NavigationScreen(),
+      binding: NavigationControllerBinding(),
+    ),
   ];
 }
