@@ -9,6 +9,7 @@ import 'package:home_test_prudential/presentation/navigation/controllers/navigat
 import '../../../config/lifecycle/app_lifecycle_service.dart';
 import '../../../domain/products/models/products_model.dart';
 import '../../../domain/products/usecases/create_product_usecase.dart';
+import '../../../domain/products/usecases/delete_product_usecase.dart';
 import '../../../domain/products/usecases/get_productDetail_usecase.dart';
 import '../../../utils/config.dart';
 import '../../../utils/helper/snackbar.dart';
@@ -17,14 +18,17 @@ class ProductsController extends GetxController {
   final GetProductsUseCase _getProductsUseCase;
   final GetProductDetailUseCase _getProductDetailUseCase;
   final CreateProductUseCase _createProductUseCase;
+  final DeleteProductUseCase _deleteProductUseCase;
 
   ProductsController({
     required GetProductsUseCase getProductsUseCase,
     required GetProductDetailUseCase getProductDetailUseCase,
     required CreateProductUseCase createProductUseCase,
+    required DeleteProductUseCase deleteProductUseCase,
   }) : _getProductsUseCase = getProductsUseCase,
        _getProductDetailUseCase = getProductDetailUseCase,
-       _createProductUseCase = createProductUseCase;
+       _createProductUseCase = createProductUseCase,
+       _deleteProductUseCase = deleteProductUseCase;
 
   // ═══════════════════════════════════════════════════════════
   //  STATUS — setiap fetch punya ApiCallStatus sendiri
@@ -34,6 +38,7 @@ class ProductsController extends GetxController {
   final Rx<ApiCallStatus> productsStatus = ApiCallStatus.holding.obs;
   final Rx<ApiCallStatus> productDetailStatus = ApiCallStatus.holding.obs;
   final Rx<ApiCallStatus> productCreateStatus = ApiCallStatus.holding.obs;
+  final Rx<ApiCallStatus> productDeleteStatus = ApiCallStatus.holding.obs;
 
   // ═══════════════════════════════════════════════════════════
   //  DATA
@@ -297,6 +302,34 @@ class ProductsController extends GetxController {
       );
     } catch (e) {
       productCreateStatus.value = ApiCallStatus.error;
+      EasyLoading.dismiss();
+      SnackbarHelper.showError(e.toString());
+    }
+  }
+
+  // delete product
+  Future<void> deleteProduct(String id) async {
+    productDeleteStatus.value = ApiCallStatus.loading;
+    EasyLoading.show(status: 'Deleting product...');
+    try {
+      final result = await _deleteProductUseCase.execute(id);
+      result.fold(
+        (error) {
+          productDeleteStatus.value = ApiCallStatus.error;
+          EasyLoading.dismiss();
+          SnackbarHelper.showError(error.message);
+        },
+        (data) {
+          Get.back();
+          productDeleteStatus.value = ApiCallStatus.success;
+          EasyLoading.dismiss();
+          SnackbarHelper.showSuccess('Product deleted successfully!');
+
+          refreshProducts();
+        },
+      );
+    } catch (e) {
+      productDeleteStatus.value = ApiCallStatus.error;
       EasyLoading.dismiss();
       SnackbarHelper.showError(e.toString());
     }

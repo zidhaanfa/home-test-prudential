@@ -27,6 +27,34 @@ class ProductDetailScreen extends GetView<ProductsController> {
       appBar: AppBar(
         title: const Text('Product Detail'),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: () {
+              Get.dialog(
+                AlertDialog(
+                  title: const Text('Delete Product'),
+                  content: const Text(
+                    'Are you sure you want to delete this product?',
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Get.back(),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        controller.deleteProduct(productId.toString());
+                        Get.back();
+                      },
+                      child: const Text('Delete'),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: GetBuilder<ProductsController>(
         id: 'productDetail',
