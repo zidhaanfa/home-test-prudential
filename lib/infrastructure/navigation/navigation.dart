@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../presentation/products/product.detail.screen.dart';
+import '../../presentation/products/update.product.screen.dart';
 import '../../presentation/screens.dart';
 import '../network/environments.dart';
 import 'bindings/controllers/controllers_bindings.dart';
@@ -30,19 +32,9 @@ class EnvironmentsBadge extends StatelessWidget {
 class Nav {
   static List<GetPage> routes = [
     GetPage(
-      name: Routes.home,
-      page: () => const HomeScreen(),
-      binding: HomeControllerBinding(),
-    ),
-    GetPage(
       name: Routes.login,
       page: () => const LoginScreen(),
       binding: LoginControllerBinding(),
-    ),
-    GetPage(
-      name: Routes.user,
-      page: () => const UserScreen(),
-      binding: UserControllerBinding(),
     ),
     GetPage(
       name: Routes.navigation,
@@ -56,7 +48,17 @@ class Nav {
     ),
     GetPage(
       name: Routes.addProduct,
-      page: () => const ProductsScreen(),
+      page: () => const AddProductScreen(),
+      binding: ProductsControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.productDetail,
+      page: () => const ProductDetailScreen(),
+      binding: ProductsControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.updateProduct,
+      page: () => const UpdateProductScreen(),
       binding: ProductsControllerBinding(),
     ),
     GetPage(

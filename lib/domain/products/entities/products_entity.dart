@@ -22,20 +22,22 @@ class ProductEntity {
     required this.discountPercentage,
     required this.rating,
     required this.stock,
-    required this.tags,
+    this.tags,
     required this.brand,
     required this.sku,
-    required this.weight,
-    required this.dimensions,
-    required this.warrantyInformation,
-    required this.shippingInformation,
-    required this.availabilityStatus,
-    required this.reviews,
-    required this.returnPolicy,
-    required this.minimumOrderQuantity,
-    required this.meta,
-    required this.thumbnail,
-    required this.images,
+    this.weight,
+    this.dimensions,
+    this.warrantyInformation,
+    this.shippingInformation,
+    this.availabilityStatus,
+    this.reviews,
+    this.returnPolicy,
+    this.minimumOrderQuantity,
+    this.meta,
+    this.thumbnail,
+    this.images,
+    this.isDeleted,
+    this.deletedOn,
   });
 
   final int id;
@@ -46,20 +48,22 @@ class ProductEntity {
   final double discountPercentage;
   final double rating;
   final int stock;
-  final List<String> tags;
+  final List<String>? tags;
   final String brand;
   final String sku;
-  final int weight;
+  final int? weight;
   final ProductDimensionsEntity? dimensions;
-  final String warrantyInformation;
-  final String shippingInformation;
-  final String availabilityStatus;
-  final List<ProductReviewEntity> reviews;
-  final String returnPolicy;
-  final int minimumOrderQuantity;
+  final String? warrantyInformation;
+  final String? shippingInformation;
+  final String? availabilityStatus;
+  final List<ProductReviewEntity>? reviews;
+  final String? returnPolicy;
+  final int? minimumOrderQuantity;
   final ProductMetaEntity? meta;
-  final String thumbnail;
-  final List<String> images;
+  final String? thumbnail;
+  final List<String>? images;
+  final bool? isDeleted;
+  final DateTime? deletedOn;
 }
 
 class ProductDimensionsEntity {

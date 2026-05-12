@@ -128,3 +128,5 @@ enum TopicType { cpu, interface }
 enum UserType { technician, user }
 
 enum DiscountType { percentage, fixedAmount }
+
+enum ApiCallStatus { loading, success, error, empty, holding }

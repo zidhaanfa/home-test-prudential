@@ -13,7 +13,7 @@ class PaginationFilter {
     final map = <String, dynamic>{'skip': skip, 'limit': limit};
 
     if (search != null && search!.isNotEmpty) {
-      map['search'] = search;
+      map['q'] = search;
     }
 
     return map;
@@ -22,9 +22,9 @@ class PaginationFilter {
   /// Copy with helper
   PaginationFilter copyWith({int? skip, int? limit, String? search}) {
     return PaginationFilter(
+      search: search ?? this.search,
       skip: skip ?? this.skip,
       limit: limit ?? this.limit,
-      search: search ?? this.search,
     );
   }
 }

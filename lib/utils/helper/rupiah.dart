@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class RupiahHelper {
+class MoneyHelper {
   String formatCurrencyStringToRupiah(String amount) {
     try {
       double parsedAmount = double.tryParse(amount) ?? 0.0;
@@ -24,6 +24,16 @@ class RupiahHelper {
         symbol: 'Rp',
         decimalDigits: 0,
       );
+      return formatter.format(amount);
+    } catch (e) {
+      debugPrint('Error formatting currency: $e');
+      return amount.toString();
+    }
+  }
+
+  String formatCurrencyToUSD(double amount) {
+    try {
+      final formatter = NumberFormat.currency(locale: 'en_US', symbol: r'$');
       return formatter.format(amount);
     } catch (e) {
       debugPrint('Error formatting currency: $e');

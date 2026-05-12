@@ -59,8 +59,11 @@ class Endpoint {
 class _AuthEndpoints {
   String get login => '${Domain.api}/auth/login';
   String get refresh => '${Domain.api}/auth/refresh';
+  String get me => '${Domain.api}/auth/me';
 }
 
 class _ProductEndpoints {
   String get products => '${Domain.api}/products';
+  String get create => '${Domain.api}/products/add';
+  String get search => '${Domain.api}/products/search';
 }

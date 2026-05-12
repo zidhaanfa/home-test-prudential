@@ -121,12 +121,12 @@ class DioClient {
     try {
       final response = await Dio().post(
         Endpoint.auth.refresh,
-        data: {'refresh_token': refreshToken},
+        data: {'refreshToken': refreshToken, 'expiresInMins': 30},
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        final newAccessToken = response.data['data']?['access_token'];
-        final newRefreshToken = response.data['data']?['refresh_token'];
+        final newAccessToken = response.data['accessToken'];
+        final newRefreshToken = response.data['refreshToken'];
 
         if (newAccessToken != null) {
           await secureStorage.write(
